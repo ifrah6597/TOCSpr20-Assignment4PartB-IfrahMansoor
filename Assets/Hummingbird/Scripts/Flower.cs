@@ -68,25 +68,19 @@ public class Flower : MonoBehaviour
     /// </summary>
     /// <param name="amount">Amount of nectar to remove</param>
     /// <returns>Amount of nectar successfully removed</returns>
+   
+    
     public float Feed(float amount)
     {
-        // Successful feed
         float nectarTaken = Mathf.Clamp(amount, 0f, NectarAmount);
         NectarAmount -= amount;
-
         if (!HasNectar)
         {
             NectarAmount = 0;
-
-            // Disable flower and nectar collider
             flowerCollider.gameObject.SetActive(false);
             nectarCollider.gameObject.SetActive(false);
-
-            // change flower color for empty
             flowerMaterial.SetColor("_BaseColor", emptyFlowerColor);
         }
-
-        // return amount of nectar that was taken
         return nectarTaken;
     }
 
@@ -95,27 +89,17 @@ public class Flower : MonoBehaviour
     /// </summary>
     public void ResetFlower()
     {
-        // Refill the nectar
         NectarAmount = 1f;
-
-        // Enable colliders
         flowerCollider.gameObject.SetActive(true);
         nectarCollider.gameObject.SetActive(true);
-
-        // change flower color for full
         flowerMaterial.SetColor("_BaseColor", fullFlowerColor);
     }
 
-    /// <summary>
-    /// Called when the flower wakes up
-    /// </summary>
+    
     private void Awake()
     {
-        // find mesh render
         MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
         flowerMaterial = meshRenderer.material;
-
-        // find flower and nectar colliders
         flowerCollider = transform.Find("FlowerCollider").GetComponent<Collider>();
         nectarCollider = transform.Find("FlowerNectarCollider").GetComponent<Collider>();
 
